@@ -173,12 +173,9 @@ class TabNumberedStepperMenu(
             topToTop = id
         }
 
-        labelView.text = title
-        labelView.measure(0, 0)
-
         val maxWidth = max(
-            _menuItems.maxByOrNull { it.labelView.measuredWidth }?.labelView?.measuredWidth ?: 0,
-            labelView.measuredWidth
+            _menuItems.maxByOrNull { it.labelView.width }?.labelView?.width ?: 0,
+            labelView.width
         )
 
         _menuItems.forEach {
@@ -186,7 +183,11 @@ class TabNumberedStepperMenu(
         }
 
         labelView.run {
-            setTextAppearance(textAppearance)
+            text = title
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                setTextAppearance(context, textAppearance)
+            else
+                setTextAppearance(textAppearance)
             setTextColor(textColor)
             textSizeInPX?.let { setTextSize(TypedValue.COMPLEX_UNIT_PX, it.toFloat()) }
             layoutParams.width = maxWidth
