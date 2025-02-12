@@ -16,6 +16,7 @@
 package com.aceinteract.android.stepper.presentation.samples
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -23,11 +24,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.aceinteract.android.stepper.R
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
+import com.aceinteract.android.stepper.databinding.FleetsStepperActivityBinding
+import com.aceinteract.android.stepper.databinding.TabNumberedStepperActivityBinding
 import com.aceinteract.android.stepper.models.StepperSettings
 import com.aceinteract.android.stepper.presentation.steps.StepperViewModel
-import kotlinx.android.synthetic.main.tab_stepper_activity.button_next
-import kotlinx.android.synthetic.main.tab_stepper_activity.stepper
-import kotlinx.android.synthetic.main.tab_stepper_activity.toolbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,22 +42,27 @@ class NumberedTabStepperActivity : AppCompatActivity(), StepperNavListener {
 
     private val viewModel: StepperViewModel by lazy { ViewModelProvider(this)[StepperViewModel::class.java] }
 
+    private lateinit var binding: TabNumberedStepperActivityBinding
+
     /**
      * Setup stepper and activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tab_numbered_stepper_activity)
+        binding = TabNumberedStepperActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        stepper.initializeStepper()
+        onBackPressedDispatcher.addCallback(this,onBackPressedCallback)
 
-        setSupportActionBar(toolbar)
+        binding.stepper.initializeStepper()
+
+        setSupportActionBar(binding.toolbar)
 
         // Setup Action bar for title and up navigation.
-        setupActionBarWithNavController(findNavControllerFromFragmentContainer(R.id.frame_stepper))
+        setupActionBarWithNavController(findNavControllerFromFragmentContainer(binding.frameStepper.id))
 
-        button_next.setOnClickListener {
-            stepper.goToNextStep()
+        binding.buttonNext.setOnClickListener {
+            binding.stepper.goToNextStep()
         }
 
         collectStateFlow()
@@ -76,24 +81,24 @@ class NumberedTabStepperActivity : AppCompatActivity(), StepperNavListener {
         menu.add(0 /* or 0 */, R.id.step_4_dest, 0, "New Step")
 
         stepperNavListener = this@NumberedTabStepperActivity
-        setupWithNavController(findNavControllerFromFragmentContainer(R.id.frame_stepper))
+        setupWithNavController(findNavControllerFromFragmentContainer(binding.frameStepper.id))
     }
 
     private fun collectStateFlow() {
         viewModel.stepperSettings.onEach {
-            stepper.widgetColor = it.iconColor
-            stepper.textColor = it.textColor
-            stepper.textSize = it.textSize
-            stepper.iconSize = it.iconSize
+            binding.stepper.widgetColor = it.iconColor
+            binding.stepper.textColor = it.textColor
+            binding.stepper.textSize = it.textSize
+            binding.stepper.iconSize = it.iconSize
         }.launchIn(lifecycleScope)
     }
 
     override fun onStepChanged(step: Int) {
         showToast("Step changed to: $step")
         if (step == 3) {
-            button_next.setImageResource(R.drawable.ic_check)
+            binding.buttonNext.setImageResource(R.drawable.ic_check)
         } else {
-            button_next.setImageResource(R.drawable.ic_right)
+            binding.buttonNext.setImageResource(R.drawable.ic_right)
         }
     }
 
@@ -105,16 +110,18 @@ class NumberedTabStepperActivity : AppCompatActivity(), StepperNavListener {
      * Use navigation controller to navigate up.
      */
     override fun onSupportNavigateUp(): Boolean =
-        findNavControllerFromFragmentContainer(R.id.frame_stepper).navigateUp()
+        findNavControllerFromFragmentContainer(binding.frameStepper.id).navigateUp()
 
     /**
      * Navigate up when the back button is pressed.
      */
-    override fun onBackPressed() {
-        if (stepper.currentStep == 0) {
-            super.onBackPressed()
-        } else {
-            findNavControllerFromFragmentContainer(R.id.frame_stepper).navigateUp()
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (binding.stepper.currentStep == 0) {
+                finish()
+            } else {
+                findNavControllerFromFragmentContainer(binding.frameStepper.id).navigateUp()
+            }
         }
     }
 }

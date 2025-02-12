@@ -1,10 +1,15 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath(kotlin("gradle-plugin", RootDependencies.Versions.kotlin))
+        classpath(ClasspathDependencies.kotlinExtensions)
+        classpath(ClasspathDependencies.kotlinGradle)
         classpath(ClasspathDependencies.allopen)
         classpath(ClasspathDependencies.androidMaven)
         classpath(ClasspathDependencies.gradle)
@@ -17,13 +22,15 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven("https://jitpack.io")
     }
 
     plugins.apply(PluginDependencies.SPOTLESS)
 
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 }

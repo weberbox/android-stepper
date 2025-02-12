@@ -30,14 +30,14 @@ import com.aceinteract.android.stepper.menus.base.StepperMenuItem
  * @property labelView the view containing the item step label.
  * @property connectorView the view containing the item step connector.
  */
-class TabStepperMenuItem(
+public class TabStepperMenuItem(
     private val context: Context,
     id: Int,
     groupId: Int = 0,
     order: Int = 0,
-    val iconView: FrameLayout,
-    val labelView: TextView,
-    val connectorView: View? = null
+    public val iconView: FrameLayout,
+    public val labelView: TextView,
+    public val connectorView: View? = null
 ) : StepperMenuItem(id, groupId, order) {
 
     init {

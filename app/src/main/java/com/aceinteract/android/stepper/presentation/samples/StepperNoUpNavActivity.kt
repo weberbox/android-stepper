@@ -25,9 +25,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.aceinteract.android.stepper.R
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
+import com.aceinteract.android.stepper.databinding.StepperNoUpNavActivityBinding
 import com.aceinteract.android.stepper.models.StepperSettings
 import com.aceinteract.android.stepper.presentation.steps.StepperViewModel
-import kotlinx.android.synthetic.main.stepper_no_up_nav_activity.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,20 +42,23 @@ class StepperNoUpNavActivity : AppCompatActivity(), StepperNavListener {
 
     private val viewModel: StepperViewModel by lazy { ViewModelProvider(this)[StepperViewModel::class.java] }
 
+    private lateinit var binding: StepperNoUpNavActivityBinding
+
     /**
      * Setup stepper and activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.stepper_no_up_nav_activity)
+        binding = StepperNoUpNavActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        stepper.initializeStepper()
+        binding.stepper.initializeStepper()
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         // Setup Action bar for title with top-level destinations.
         setupActionBarWithNavController(
-            findNavControllerFromFragmentContainer(R.id.frame_stepper),
+            findNavControllerFromFragmentContainer(binding.frameStepper.id),
             AppBarConfiguration.Builder(
                 R.id.step_1_dest,
                 R.id.step_2_dest,
@@ -64,12 +67,12 @@ class StepperNoUpNavActivity : AppCompatActivity(), StepperNavListener {
             ).build()
         )
 
-        button_previous.setOnClickListener {
-            stepper.goToPreviousStep()
+        binding.buttonPrevious.setOnClickListener {
+            binding.stepper.goToPreviousStep()
         }
 
-        button_next.setOnClickListener {
-            stepper.goToNextStep()
+        binding.buttonNext.setOnClickListener {
+            binding.stepper.goToNextStep()
         }
 
         collectStateFlow()
@@ -86,27 +89,27 @@ class StepperNoUpNavActivity : AppCompatActivity(), StepperNavListener {
         )
 
         stepperNavListener = this@StepperNoUpNavActivity
-        setupWithNavController(findNavControllerFromFragmentContainer(R.id.frame_stepper))
+        setupWithNavController(findNavControllerFromFragmentContainer(binding.frameStepper.id))
     }
 
     private fun collectStateFlow() {
         viewModel.stepperSettings.onEach {
-            stepper.widgetColor = it.iconColor
-            stepper.textColor = it.textColor
-            stepper.textSize = it.textSize
-            stepper.iconSize = it.iconSize
+            binding.stepper.widgetColor = it.iconColor
+            binding.stepper.textColor = it.textColor
+            binding.stepper.textSize = it.textSize
+            binding.stepper.iconSize = it.iconSize
         }.launchIn(lifecycleScope)
     }
 
     override fun onStepChanged(step: Int) {
         showToast("Step changed to: $step")
 
-        button_previous.isVisible = step != 0
+        binding.buttonPrevious.isVisible = step != 0
 
         if (step == 3) {
-            button_next.setImageResource(R.drawable.ic_check)
+            binding.buttonNext.setImageResource(R.drawable.ic_check)
         } else {
-            button_next.setImageResource(R.drawable.ic_right)
+            binding.buttonNext.setImageResource(R.drawable.ic_right)
         }
     }
 

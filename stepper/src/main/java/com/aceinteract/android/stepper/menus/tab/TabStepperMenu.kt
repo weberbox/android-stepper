@@ -37,7 +37,7 @@ import kotlin.math.max
 /**
  * Menu showing steps in tab mode.
  */
-class TabStepperMenu(
+public class TabStepperMenu(
     context: Context,
     override var widgetColor: Int,
     override var iconSizeInPX: Int,

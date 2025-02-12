@@ -1,22 +1,23 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import BuildConfiguration.versionCode
+import BuildConfiguration.versionName
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("plugin.allopen")
     kotlin("kapt")
-    id(PluginDependencies.ANDROID_MAVEN)
 }
 
 group = "com.github.acefalobi"
 
 android {
-    compileSdkVersion(BuildConfiguration.compileSdkVersion)
+    compileSdk = BuildConfiguration.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion(BuildConfiguration.minSdkVersion)
-        targetSdkVersion(BuildConfiguration.targetSdkVersion)
+        minSdk = BuildConfiguration.minSdkVersion
+        testOptions.targetSdk  = BuildConfiguration.targetSdkVersion
 
         versionCode = BuildConfiguration.versionCode
         versionName = BuildConfiguration.versionName
@@ -29,23 +30,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
-    androidExtensions {
-        isExperimental = true
-    }
-
-    lintOptions {
-        isCheckAllWarnings = true
-        isWarningsAsErrors = true
-    }
-
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests.isIncludeAndroidResources = true
         unitTests.isReturnDefaultValues = true
@@ -56,6 +51,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.aceinteract.android.stepper"
 }
 
 kotlin {

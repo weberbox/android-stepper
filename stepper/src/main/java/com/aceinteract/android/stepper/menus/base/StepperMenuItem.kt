@@ -26,7 +26,7 @@ import android.view.View
 /**
  * Menu Item for managing interaction of menu items in [StepperMenu].
  */
-abstract class StepperMenuItem(
+public abstract class StepperMenuItem(
     private val id: Int,
     private val groupId: Int = 0,
     private val order: Int = 0
@@ -121,7 +121,7 @@ abstract class StepperMenuItem(
     /**
      * Action is not supported.
      */
-    override fun setShowAsAction(actionEnum: Int) = throw UnsupportedOperationException(
+    public override fun setShowAsAction(actionEnum: Int): Nothing = throw UnsupportedOperationException(
         "Action is not supported."
     )
 

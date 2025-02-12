@@ -18,17 +18,17 @@ package com.aceinteract.android.stepper
 /**
  * Interface for getting callbacks from stepper navigation.
  */
-interface StepperNavListener {
+public interface StepperNavListener {
 
     /**
      * Callback for when the current step has been changed.
      *
      * @param step the new (0-indexed) step.
      */
-    fun onStepChanged(step: Int)
+    public fun onStepChanged(step: Int)
 
     /**
      * Callback for when the stepper has reached the end of the steps.
      */
-    fun onCompleted()
+    public fun onCompleted()
 }

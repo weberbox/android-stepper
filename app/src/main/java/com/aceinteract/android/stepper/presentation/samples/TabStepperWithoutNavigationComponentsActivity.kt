@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.aceinteract.android.stepper.R
 import com.aceinteract.android.stepper.StepperNavListener
-import kotlinx.android.synthetic.main.tab_stepper_without_navigation_components_activity.*
+import com.aceinteract.android.stepper.databinding.TabStepperWithoutNavigationComponentsActivityBinding
 import ng.softcom.android.utils.ui.showToast
 
 /**
@@ -30,12 +30,15 @@ class TabStepperWithoutNavigationComponentsActivity : AppCompatActivity(), Stepp
 
     private val menuTitles = arrayListOf<String>()
 
+    private lateinit var binding: TabStepperWithoutNavigationComponentsActivityBinding
+
     /**
      * Setup stepper and activity.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tab_stepper_without_navigation_components_activity)
+        binding = TabStepperWithoutNavigationComponentsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeStepper()
         initializeToolbar()
@@ -43,27 +46,27 @@ class TabStepperWithoutNavigationComponentsActivity : AppCompatActivity(), Stepp
     }
 
     private fun initializeStepper() {
-        stepper.stepperNavListener = this@TabStepperWithoutNavigationComponentsActivity
+        binding.stepper.stepperNavListener = this@TabStepperWithoutNavigationComponentsActivity
     }
 
     private fun initializeToolbar() {
-        for (i in 0 until stepper.menu.size()) {
-            menuTitles.add(stepper.menu.getItem(i).title.toString())
+        for (i in 0 until binding.stepper.menu.size()) {
+            menuTitles.add(binding.stepper.menu.getItem(i).title.toString())
         }
 
-        toolbar.title = menuTitles[0]
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
+        binding.toolbar.title = menuTitles[0]
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
     private fun initializeButtons() {
-        button_next.setOnClickListener {
-            stepper.goToNextStep()
+        binding.buttonNext.setOnClickListener {
+            binding.stepper.goToNextStep()
         }
 
-        button_previous.setOnClickListener {
-            stepper.goToPreviousStep()
+        binding.buttonPrevious.setOnClickListener {
+            binding.stepper.goToPreviousStep()
         }
     }
 
@@ -76,26 +79,26 @@ class TabStepperWithoutNavigationComponentsActivity : AppCompatActivity(), Stepp
     }
 
     private fun setupToolbarTitle(step: Int) {
-        toolbar.title = menuTitles[step]
+        binding.toolbar.title = menuTitles[step]
     }
 
     private fun setupPreviousButtonVisibility(step: Int) {
-        button_previous.isVisible = step > 0
+        binding.buttonPrevious.isVisible = step > 0
     }
 
     private fun setupNextButtonImage(step: Int) {
         if (step == 3) {
-            button_next.setImageResource(R.drawable.ic_check)
+            binding.buttonNext.setImageResource(R.drawable.ic_check)
         } else {
-            button_next.setImageResource(R.drawable.ic_right)
+            binding.buttonNext.setImageResource(R.drawable.ic_right)
         }
     }
 
     private fun setupViewVisibility(step: Int) {
         val isVisible = step % 2 == 0
 
-        layout_size_change.isVisible = isVisible
-        layout_color_change.isVisible = !isVisible
+        binding.layoutSizeChange.root.isVisible = isVisible
+        binding.layoutColorChange.root.isVisible = !isVisible
     }
 
     override fun onCompleted() {

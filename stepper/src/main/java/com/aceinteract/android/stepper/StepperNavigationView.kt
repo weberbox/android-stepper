@@ -42,7 +42,7 @@ import ng.softcom.android.utils.ui.getColorCompat
  * @param context the context to initialize the view with.
  * @param attrs the set of XML attributes to initialize the view with.
  */
-class StepperNavigationView(
+public class StepperNavigationView(
     context: Context,
     attrs: AttributeSet
 ) : FrameLayout(context, attrs) {
@@ -58,12 +58,12 @@ class StepperNavigationView(
     /**
      * The menu that displays the steps.
      */
-    lateinit var menu: StepperMenu
+    public lateinit var menu: StepperMenu
 
     /**
      * How long fleets should last in [FleetsStepperMenu].
      */
-    var fleetDuration: Long
+    public var fleetDuration: Long
         set(value) {
             if (menu is FleetsStepperMenu) {
                 (menu as FleetsStepperMenu).fleetDuration = value
@@ -79,7 +79,7 @@ class StepperNavigationView(
     /**
      * The color to use for widgets.
      */
-    var widgetColor: Int
+    public var widgetColor: Int
         set(value) {
             menu.widgetColor = value
             menu.updateUI()
@@ -89,7 +89,7 @@ class StepperNavigationView(
     /**
      * The color to use for labels.
      */
-    var textColor: Int
+    public var textColor: Int
         set(@ColorInt value) {
             menu.textColor = value
             menu.updateUI()
@@ -99,7 +99,7 @@ class StepperNavigationView(
     /**
      * The style to use for labels.
      */
-    var textAppearance: Int
+    public var textAppearance: Int
         set(value) {
             menu.textAppearance = value
             menu.updateUI()
@@ -109,7 +109,7 @@ class StepperNavigationView(
     /**
      * The size of the label (in pixels).
      */
-    var textSize: Int
+    public var textSize: Int
         set(value) {
             menu.textSizeInPX = value
             menu.updateUI()
@@ -119,7 +119,7 @@ class StepperNavigationView(
     /**
      * The size of the icon (in pixels).
      */
-    var iconSize: Int
+    public var iconSize: Int
         set(value) {
             menu.iconSizeInPX = value
             menu.updateUI()
@@ -139,12 +139,12 @@ class StepperNavigationView(
     /**
      * The listener checking for updates to the navigation.
      */
-    var stepperNavListener: StepperNavListener? = null
+    public var stepperNavListener: StepperNavListener? = null
 
     /**
      * The 0-indexed current step that shadows the current step from [menu].
      */
-    val currentStep get() = menu.currentStep
+    public val currentStep: Int get() = menu.currentStep
 
     init {
         context.withStyledAttributes(attrs, R.styleable.StepperNavigationView, 0) {
@@ -243,7 +243,7 @@ class StepperNavigationView(
      * @param navController navigation controller for navigating between destinations.
      */
     @JvmOverloads
-    fun setupWithNavController(
+    public fun setupWithNavController(
         navController: NavController,
         navAnimBuilder: AnimBuilder.() -> Unit = {
             enter = R.anim.anim_slide_left_enter
@@ -290,14 +290,14 @@ class StepperNavigationView(
     /**
      * Go to the step before the current one.
      */
-    fun goToPreviousStep() {
+    public fun goToPreviousStep() {
         onStepChanged.invoke(menu.currentStep - 1)
     }
 
     /**
      * Go to the step after the current one
      */
-    fun goToNextStep() {
+    public fun goToNextStep() {
         onStepChanged.invoke(menu.currentStep + 1)
     }
 
@@ -306,7 +306,7 @@ class StepperNavigationView(
      *
      * @property identifier the unique byte int for the stepper type.
      */
-    enum class StepperType(val identifier: Int) {
+    public enum class StepperType(public val identifier: Int) {
 
         /**
          * Simple tabbed stepper.

@@ -37,13 +37,13 @@ import com.aceinteract.android.stepper.StepperNavigationView
  * @property textColor the color to use for labels.
  * @property textSizeInPX the size of the label in pixels.
  */
-abstract class StepperMenu constructor(
+public abstract class StepperMenu constructor(
     context: Context,
-    @ColorInt open var widgetColor: Int,
-    open var iconSizeInPX: Int,
-    @StyleRes open var textAppearance: Int,
-    @ColorInt open var textColor: Int,
-    open var textSizeInPX: Int?
+    @ColorInt public open var widgetColor: Int,
+    public open var iconSizeInPX: Int,
+    @StyleRes public open var textAppearance: Int,
+    @ColorInt public open var textColor: Int,
+    public open var textSizeInPX: Int?
 ) : ConstraintLayout(context), Menu {
 
     init {
@@ -53,7 +53,7 @@ abstract class StepperMenu constructor(
     /**
      * 0-indexed step at with the menu is at.
      */
-    abstract var currentStep: Int
+    public abstract var currentStep: Int
 
     /**
      * List of menu items in the menu.
@@ -63,7 +63,7 @@ abstract class StepperMenu constructor(
     /**
      * Called when the menu step is changed.
      */
-    var onStepChangedListener: (Int) -> Unit = {}
+    public var onStepChangedListener: (Int) -> Unit = {}
 
     /**
      * Change the current step to the menu item with [itemId].
@@ -72,7 +72,7 @@ abstract class StepperMenu constructor(
      *
      * @return whether or not an item was found.
      */
-    fun selectMenuItem(itemId: Int): Boolean {
+    public fun selectMenuItem(itemId: Int): Boolean {
         val index = menuItems.indexOfFirst { it.itemId == itemId }
         if (index == -1) {
             return false
@@ -84,7 +84,7 @@ abstract class StepperMenu constructor(
     /**
      * Update the UI of the layout with the state of the menu items.
      */
-    abstract fun updateUI()
+    public abstract fun updateUI()
 
     /**
      * Do nothing.

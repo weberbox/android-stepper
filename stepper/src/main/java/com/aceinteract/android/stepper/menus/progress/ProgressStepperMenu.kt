@@ -31,7 +31,7 @@ import com.aceinteract.android.stepper.menus.base.StepperMenuItem
 /**
  * Menu showing steps progress in a progress bar.
  */
-class ProgressStepperMenu(
+public class ProgressStepperMenu(
     context: Context,
     override var widgetColor: Int,
     override var iconSizeInPX: Int,

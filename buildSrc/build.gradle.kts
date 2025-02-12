@@ -8,17 +8,12 @@ plugins {
 // Required since Gradle 4.10+.
 repositories {
     google()
-    jcenter()
     mavenCentral()
 }
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}
-
 dependencies {
-    implementation("com.android.tools.build:gradle:4.0.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0")
-    implementation("org.jetbrains.kotlin:kotlin-allopen:1.4.0")
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:4.3.0")
+    implementation("com.android.tools.build:gradle:8.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.10")
+    implementation("org.jetbrains.kotlin:kotlin-allopen:2.1.10")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:7.0.2")
 }

@@ -1,21 +1,21 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("plugin.allopen")
     kotlin("kapt")
     id(PluginDependencies.NAVIGATION)
 }
 
 android {
-    compileSdkVersion(BuildConfiguration.compileSdkVersion)
+    compileSdk = BuildConfiguration.compileSdkVersion
 
     defaultConfig {
         applicationId = BuildConfiguration.applicationId
-        minSdkVersion(BuildConfiguration.minSdkVersion)
-        targetSdkVersion(BuildConfiguration.targetSdkVersion)
+        minSdk = BuildConfiguration.minSdkVersion
+        targetSdk = BuildConfiguration.targetSdkVersion
 
         versionCode = BuildConfiguration.versionCode
         versionName = BuildConfiguration.versionName
@@ -27,29 +27,29 @@ android {
         setProperty("archivesBaseName", "$applicationId-app-$versionName")
     }
 
-    @Suppress("UnstableApiUsage")
     buildFeatures {
         viewBinding = true
         dataBinding = true
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        android.buildFeatures.buildConfig = true
     }
 
-    androidExtensions {
-        isExperimental = true
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests.isIncludeAndroidResources = true
         unitTests.isReturnDefaultValues = true
     }
+    namespace = "com.aceinteract.android.stepper"
 }
 
 dependencies {

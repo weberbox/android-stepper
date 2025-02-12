@@ -21,7 +21,7 @@ import com.aceinteract.android.stepper.menus.base.StepperMenuItem
 /**
  * Menu item for [ProgressStepperMenu].
  */
-class ProgressStepperMenuItem(
+public class ProgressStepperMenuItem(
     id: Int,
     groupId: Int = 0,
     order: Int = 0

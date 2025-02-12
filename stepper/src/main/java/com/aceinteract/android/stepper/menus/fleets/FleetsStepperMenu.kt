@@ -32,14 +32,14 @@ import com.aceinteract.android.stepper.menus.base.StepperMenuItem
  *
  * @property fleetDuration how long fleets should stay for.
  */
-class FleetsStepperMenu(
+public class FleetsStepperMenu(
     context: Context,
     override var widgetColor: Int,
     override var iconSizeInPX: Int,
     override var textAppearance: Int,
     override var textColor: Int,
     override var textSizeInPX: Int?,
-    var fleetDuration: Long = 5000
+    public var fleetDuration: Long = 5000
 ) : StepperMenu(context, widgetColor, iconSizeInPX, textAppearance, textColor, textSizeInPX) {
 
     override var currentStep: Int = 0
@@ -82,14 +82,14 @@ class FleetsStepperMenu(
     /**
      * Pause all running fleet animations.
      */
-    fun pause() {
+    public fun pause() {
         _menuItems.forEach { it.progressAnimator.pause() }
     }
 
     /**
      * Resume all running fleet animations.
      */
-    fun resume() {
+    public fun resume() {
         _menuItems.forEach { it.progressAnimator.resume() }
     }
 

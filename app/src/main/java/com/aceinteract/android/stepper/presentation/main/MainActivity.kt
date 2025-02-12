@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aceinteract.android.stepper.R
+import com.aceinteract.android.stepper.databinding.ActivityMainBinding
 import com.aceinteract.android.stepper.models.ActivityItem
 import com.aceinteract.android.stepper.presentation.samples.FadeAnimStepperActivity
 import com.aceinteract.android.stepper.presentation.samples.FleetsStepperActivity
@@ -28,8 +29,6 @@ import com.aceinteract.android.stepper.presentation.samples.ProgressStepperActiv
 import com.aceinteract.android.stepper.presentation.samples.StepperNoUpNavActivity
 import com.aceinteract.android.stepper.presentation.samples.TabStepperActivity
 import com.aceinteract.android.stepper.presentation.samples.TabStepperWithoutNavigationComponentsActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -38,23 +37,26 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     /**
      * Setup activity and UI.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
-        recycler_activities.layoutManager = LinearLayoutManager(this)
-        recycler_activities.addItemDecoration(
+        binding.recyclerActivities.layoutManager = LinearLayoutManager(this)
+        binding.recyclerActivities.addItemDecoration(
             DividerItemDecoration(
                 this,
                 LinearLayoutManager.VERTICAL
             )
         )
-        recycler_activities.adapter = ActivityListAdapter().apply {
+        binding.recyclerActivities.adapter = ActivityListAdapter().apply {
             submitList(
                 listOf(
                     ActivityItem(

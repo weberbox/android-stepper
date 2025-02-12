@@ -14,7 +14,7 @@ object ProjectDependencies {
 object RootDependencies {
 
     object Versions {
-        const val kotlin = "1.4.0"
+        const val kotlin = "2.1.10"
     }
 
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
@@ -41,7 +41,7 @@ object AndroidXDependencies {
 object AsyncDependencies {
 
     object Versions {
-        const val coroutines = "1.3.9"
+        const val coroutines = "1.10.0"
     }
 
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -62,7 +62,7 @@ object UtilityDependencies {
 object ViewDependencies {
 
     object Versions {
-        const val materialComponent = "1.1.0"
+        const val materialComponent = "1.12.0"
     }
 
     const val materialComponent =
@@ -91,12 +91,14 @@ object ClasspathDependencies {
 
     object Versions {
         const val androidMaven = "2.1"
-        const val gradle = "4.0.1"
-        const val hilt = "2.28-alpha"
-        const val navigation = "2.1.0"
-        const val spotless = "4.3.0"
+        const val gradle = "8.8.0"
+        const val hilt = "2.51.1"
+        const val navigation = "2.8.6"
+        const val spotless = "7.0.2"
     }
 
+    const val kotlinExtensions = "org.jetbrains.kotlin:kotlin-android-extensions:${RootDependencies.Versions.kotlin}"
+    const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${RootDependencies.Versions.kotlin}"
     const val allopen = "org.jetbrains.kotlin:kotlin-allopen:${RootDependencies.Versions.kotlin}"
     const val androidMaven = "com.github.dcendents:android-maven-gradle-plugin:${Versions.androidMaven}"
     const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
