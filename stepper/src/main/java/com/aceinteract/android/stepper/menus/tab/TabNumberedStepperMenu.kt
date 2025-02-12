@@ -55,10 +55,7 @@ class TabNumberedStepperMenu(
     override fun updateUI() {
         _menuItems.forEachIndexed { index, item ->
             val labelView = item.labelView.apply {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-                    setTextAppearance(context, textAppearance)
-                else
-                    setTextAppearance(textAppearance)
+                TextViewCompat.setTextAppearance(this, textAppearance)
                 setTextColor(textColor)
                 textSizeInPX?.let { setTextSize(TypedValue.COMPLEX_UNIT_PX, it.toFloat()) }
             }

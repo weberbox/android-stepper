@@ -27,7 +27,6 @@ import com.aceinteract.android.stepper.presentation.samples.NumberedTabStepperAc
 import com.aceinteract.android.stepper.presentation.samples.ProgressStepperActivity
 import com.aceinteract.android.stepper.presentation.samples.StepperNoUpNavActivity
 import com.aceinteract.android.stepper.presentation.samples.TabStepperActivity
-import com.aceinteract.android.stepper.presentation.samples.TabStepperWithOverflowActivity
 import com.aceinteract.android.stepper.presentation.samples.TabStepperWithoutNavigationComponentsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
@@ -85,10 +84,6 @@ class MainActivity : AppCompatActivity() {
                     ActivityItem(
                         getString(R.string.title_without_navigation_components),
                         TabStepperWithoutNavigationComponentsActivity::class.java
-                    ),
-                    ActivityItem(
-                        getString(R.string.title_with_overflow),
-                        TabStepperWithOverflowActivity::class.java
                     )
                 )
             )
